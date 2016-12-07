@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#2A9C5F"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ar.org.cedica.memoriabraccocuevas.MainActivity"
     tools:showIn="@layout/activity_main">
@@ -16,5 +17,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
         android:text="Hello World!" />
 </RelativeLayout>
