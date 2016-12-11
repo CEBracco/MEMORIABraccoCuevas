@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="pref_level"
+        android:title="@string/pref_level_label"
+        android:entries="@array/pref_levels"
+        android:entryValues="@array/pref_levels" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="pref_enable_time"
+        android:title="@string/pref_time" />
+</PreferenceScreen>

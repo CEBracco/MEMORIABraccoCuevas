@@ -66,8 +66,11 @@
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
     <!-- Sounds Settings -->
-    <string name="pref_header_notifications">Sonidos</string>
+    <string name="pref_header_sounds">Sonidos</string>
 
     <string name="pref_voz">Voz</string>
     <string name="pref_voice_gender">Género</string>
+    <string name="pref_level_label">Nivel</string>
+    <string name="pref_time">Tiempo</string>
+    <string name="pref_header_difficulty">Dificultad</string>
 </resources>

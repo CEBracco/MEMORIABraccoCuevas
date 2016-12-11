@@ -4,8 +4,13 @@
 
     <header
         android:fragment="ar.org.cedica.memoriabraccocuevas.SettingsActivity$VoicePreferenceFragment"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/pref_voz" />
+        android:icon="@drawable/ic_volume_up_black_24dp"
+        android:title="@string/pref_header_sounds" />
+
+    <header
+        android:fragment="ar.org.cedica.memoriabraccocuevas.SettingsActivity$DifficultyPreferenceFragment"
+        android:icon="@drawable/ic_gamepad_black_24dp"
+        android:title="@string/pref_header_difficulty" />
 
     <header
         android:fragment="ar.org.cedica.memoriabraccocuevas.SettingsActivity$GeneralPreferenceFragment"
