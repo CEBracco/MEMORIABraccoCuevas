@@ -9,5 +9,11 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="pref_enable_time"
-        android:title="@string/pref_time" />
+        android:title="@string/pref_enable_time_label" />
+    <EditTextPreference
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_time_value_label"
+        android:key="pref_time_value"
+        android:inputType="number" />
 </PreferenceScreen>
