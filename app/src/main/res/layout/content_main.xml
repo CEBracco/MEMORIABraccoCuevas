@@ -14,76 +14,40 @@
     tools:context="ar.org.cedica.memoriabraccocuevas.MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <LinearLayout android:id="@+id/mainContent" android:layout_width="match_parent" android:layout_height="match_parent"
+        android:orientation="vertical" android:background="#ffffff">
+    <!-- height 25% -->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLy"
-        android:weightSum="1"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="0dp"
+        android:layout_weight="0.54"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="98dp"
-            android:id="@+id/linearLy1">
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView6"
-                android:layout_weight="0.58"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical|center_horizontal"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-        </LinearLayout>
-
-        <TableLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/tableImages">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView2"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView3"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/imageView4"
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter" />
-            </TableRow>
-
-        </TableLayout>
+            android:layout_weight="1"
+             />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
 
     </LinearLayout>
 
