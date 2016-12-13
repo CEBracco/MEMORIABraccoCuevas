@@ -20,5 +20,6 @@
         android:key="pref_level_word"
         android:title="@string/pref_word_label"
         android:entries="@array/pref_words"
-        android:entryValues="@array/pref_words" />
+        android:entryValues="@array/pref_words"
+        android:defaultValue="Caballo" />
 </PreferenceScreen>
