@@ -93,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         img3.setBackgroundResource(R.drawable.bozal);
         img4.setBackgroundResource(R.drawable.cola);
 
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//        String word=prefs.getString("pref_level_word",null);
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String word=SP.getString("pref_level_word","caballo");
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
-        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier("caballo","raw",MainActivity.this.getPackageName()));
+        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
