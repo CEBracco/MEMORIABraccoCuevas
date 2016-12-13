@@ -10,5 +10,32 @@
         <item>Avanzado</item>
         <item>Experto</item>
     </string-array>
-    <string-array name="pref_words" />
+    <string-array name="pref_words">
+        <item>Caballo</item>
+        <item>Matra</item>
+        <item>Montura</item>
+        <item>Monturin</item>
+        <item>Chichon de volteo</item>
+        <item>Cabezada</item>
+        <item>Bozal</item>
+        <item>Riendas</item>
+        <item>Casco</item>
+        <item>Arriador</item>
+        <item>Fusta</item>
+        <item>Cuerda</item>
+        <item>Cepillo</item>
+        <item>Rasqueta</item>
+        <item>Escarba vasos</item>
+        <item>Palos</item>
+        <item>Tarima</item>
+        <item>Pasto</item>
+        <item>Zanahoria</item>
+        <item>Pelota</item>
+        <item>Aro</item>
+        <item>Orejas</item>
+        <item>Crines</item>
+        <item>Cola</item>
+        <item>Ojos</item>
+        <item>Cascos</item>
+    </string-array>
 </resources>
