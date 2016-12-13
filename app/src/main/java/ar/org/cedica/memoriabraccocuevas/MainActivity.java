@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
         ImageView img2 =(ImageView)findViewById(R.id.imageView2);
         ImageView img3 =(ImageView)findViewById(R.id.imageView3);
         ImageView img4 =(ImageView)findViewById(R.id.imageView4);
-
+        img.setBackgroundResource();
         img.setBackgroundResource(R.drawable.casco);
-        img2.setBackgroundResource(R.drawable.casco);
-        img3.setBackgroundResource(R.drawable.casco);
-        img4.setBackgroundResource(R.drawable.casco);
+        img2.setBackgroundResource(R.drawable.bajomontura);
+        img3.setBackgroundResource(R.drawable.bozal);
+        img4.setBackgroundResource(R.drawable.cola);
 
     }
 
