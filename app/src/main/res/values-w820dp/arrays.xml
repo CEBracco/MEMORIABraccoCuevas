@@ -10,4 +10,5 @@
         <item>Avanzado</item>
         <item>Experto</item>
     </string-array>
+    <string-array name="pref_words" />
 </resources>
