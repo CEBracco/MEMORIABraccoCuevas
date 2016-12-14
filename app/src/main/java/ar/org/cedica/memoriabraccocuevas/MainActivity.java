@@ -39,13 +39,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //map nombre y posicion de imagen
         Map<String,Integer> componenteAMemorizar = this.setMapGame();
-        TextView text = (TextView) findViewById(R.id.textView);
+
+        //este claves seguro va a desaparecer, no contaba con el preferences
         ArrayList<String> claves =new  ArrayList<String>(componenteAMemorizar.keySet());
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
         String claveActual=claves.get(1);
 
+        TextView text = (TextView) findViewById(R.id.textView);
 
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String word=SP.getString("pref_level_word","caballo");
+
+        Button playButton = (Button) this.findViewById(R.id.button_play_sound);
+        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mp.start();
+            }
+        });
+        text.setText(word);
 
         ImageView[] imgs = new ImageView[4];
 
@@ -61,13 +77,14 @@ public class MainActivity extends AppCompatActivity {
         assetsImg.add(R.drawable.casco);
         assetsImg.add(R.drawable.caballo);
         assetsImg.add(R.drawable.zanahoria);
-        int Max=(5)+1;// rango para las imagenes
+        assetsImg.add(R.drawable.cepillo);
+        int Max=(6)+1;// rango para las imagenes
         int Min=0;
 
         int randPosition =((int)(Math.random()*3));
-        imgs[randPosition].setBackgroundResource(componenteAMemorizar.get(claveActual));
+        imgs[randPosition].setBackgroundResource(componenteAMemorizar.get(word));
         int rand =((int)(Math.random()*(Max-Min))+Min);
-        elementosEnPantalla.add(componenteAMemorizar.get(claveActual));
+        elementosEnPantalla.add(componenteAMemorizar.get(word));
 
         for(int i=0; i<4; i++) {
             boolean flag = true;
@@ -85,19 +102,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        
-        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String word=SP.getString("pref_level_word","caballo");
 
-        Button playButton = (Button) this.findViewById(R.id.button_play_sound);
-        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mp.start();
-            }
-        });
-        text.setText(word);
+
     }
 
     @Override
@@ -118,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
-        elementos.put("Bajomontura",R.drawable.bajomontura);
+        elementos.put("bajomontura",R.drawable.bajomontura);
         elementos.put("Cola",R.drawable.cola);
         elementos.put("Bozal",R.drawable.bozal);
         elementos.put("Casco",R.drawable.casco);
@@ -126,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         elementos.put("Zanahoria",R.drawable.zanahoria);
         elementos.put("Cuerda",R.drawable.cuerda);
         elementos.put("Arriador",R.drawable.arriador);
+        elementos.put("Cepillo",R.drawable.cepillo);
         return elementos;
 
 
