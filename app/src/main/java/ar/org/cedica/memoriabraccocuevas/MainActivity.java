@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
         String claveActual=claves.get(1);
 
-        text.setText(claveActual);
+
 
         ImageView[] imgs = new ImageView[4];
 
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         assetsImg.add(R.drawable.zanahoria);
         int Max=(5)+1;// rango para las imagenes
         int Min=0;
+
         int randPosition =((int)(Math.random()*3));
         imgs[randPosition].setBackgroundResource(componenteAMemorizar.get(claveActual));
         int rand =((int)(Math.random()*(Max-Min))+Min);
@@ -84,17 +85,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        ImageView img =(ImageView)findViewById(R.id.imageView);
-        ImageView img2 =(ImageView)findViewById(R.id.imageView2);
-        ImageView img3 =(ImageView)findViewById(R.id.imageView3);
-        ImageView img4 =(ImageView)findViewById(R.id.imageView4);
-        img.setBackgroundResource(R.drawable.casco);
-        img2.setBackgroundResource(R.drawable.bajomontura);
-        img3.setBackgroundResource(R.drawable.bozal);
-        img4.setBackgroundResource(R.drawable.cola);
-
+        
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String word=SP.getString("pref_level_word","caballo");
+
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 mp.start();
             }
         });
+        text.setText(word);
     }
 
     @Override
