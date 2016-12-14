@@ -1,5 +1,7 @@
 package ar.org.cedica.memoriabraccocuevas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -9,6 +11,7 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
         String claveActual=claves.get(1);
 
-        TextView text = (TextView) findViewById(R.id.textView);
+        final TextView text = (TextView) findViewById(R.id.textView);
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String word=SP.getString("pref_level_word","caballo");
@@ -61,13 +64,21 @@ public class MainActivity extends AppCompatActivity {
                 mp.start();
             }
         });
+        final Integer idImgActual = componenteAMemorizar.get(word);
+
         text.setText(word);
 
         ImageView[] imgs = new ImageView[4];
 
          imgs[0] =(ImageView)findViewById(R.id.imageView);
+
+
+       final AlertDialog.Builder  builder1 = new AlertDialog.Builder(this);
+
          imgs[2] =(ImageView)findViewById(R.id.imageView2);
+
          imgs[3] =(ImageView)findViewById(R.id.imageView3);
+
          imgs[1] =(ImageView)findViewById(R.id.imageView4);
 
         List<Integer> assetsImg = new ArrayList<Integer>();
@@ -80,9 +91,12 @@ public class MainActivity extends AppCompatActivity {
         assetsImg.add(R.drawable.cepillo);
         int Max=(6)+1;// rango para las imagenes
         int Min=0;
+        Random random = new Random();
+        Integer randPosition =(random.nextInt(4));
 
-        int randPosition =((int)(Math.random()*3));
-        imgs[randPosition].setBackgroundResource(componenteAMemorizar.get(word));
+
+        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
+        imgs[randPosition].setTag(componenteAMemorizar.get(word));
         int rand =((int)(Math.random()*(Max-Min))+Min);
         elementosEnPantalla.add(componenteAMemorizar.get(word));
 
@@ -93,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!elementosEnPantalla.contains(assetsImg.get(rand))) {
                         elementosEnPantalla.add(assetsImg.get(rand));
                         imgs[i].setBackgroundResource(assetsImg.get(rand));
+                        imgs[i].setTag(assetsImg.get(rand));
                         flag = false;
                     }
                     rand = ((int) (Math.random() * (Max - Min)) + Min);
@@ -102,6 +117,50 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+        imgs[0].setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(v.getTag().toString().equals(idImgActual.toString())){
+                    text.setText((String)v.getTag().toString());
+                }
+
+                return false;
+            }
+        });
+        imgs[2].setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(v.getTag().toString().equals(idImgActual.toString())){
+                    text.setText((String)v.getTag().toString());
+
+                }
+
+                return false;
+            }
+        });
+
+        imgs[3].setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(v.getTag().toString().equals(idImgActual.toString())){
+                    text.setText((String)v.getTag().toString());
+                }
+
+                return false;
+            }
+        });
+
+        imgs[1].setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(v.getTag().toString().equals(idImgActual.toString())){
+                    text.setText((String)v.getTag().toString());
+                }
+
+                return false;
+            }
+        });
+
 
 
     }
@@ -125,14 +184,14 @@ public class MainActivity extends AppCompatActivity {
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
         elementos.put("bajomontura",R.drawable.bajomontura);
-        elementos.put("Cola",R.drawable.cola);
-        elementos.put("Bozal",R.drawable.bozal);
-        elementos.put("Casco",R.drawable.casco);
-        elementos.put("Caballo",R.drawable.caballo);
-        elementos.put("Zanahoria",R.drawable.zanahoria);
-        elementos.put("Cuerda",R.drawable.cuerda);
-        elementos.put("Arriador",R.drawable.arriador);
-        elementos.put("Cepillo",R.drawable.cepillo);
+        elementos.put("cola",R.drawable.cola);
+        elementos.put("bozal",R.drawable.bozal);
+        elementos.put("casco",R.drawable.casco);
+        elementos.put("caballo",R.drawable.caballo);
+        elementos.put("zanahoria",R.drawable.zanahoria);
+        elementos.put("cuerda",R.drawable.cuerda);
+        elementos.put("arriador",R.drawable.arriador);
+        elementos.put("cepillo",R.drawable.cepillo);
         return elementos;
 
 
