@@ -4,35 +4,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Random;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView text = (TextView) findViewById(R.id.textView);
 
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String word=SP.getString("pref_level_word","caballo");
+        String word=SP.getString("pref_level_word","Caballo");
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
@@ -71,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView[] imgs = new ImageView[4];
 
          imgs[0] =(ImageView)findViewById(R.id.imageView);
-
-
-       final AlertDialog.Builder  builder1 = new AlertDialog.Builder(this);
 
          imgs[2] =(ImageView)findViewById(R.id.imageView2);
 
@@ -117,81 +102,79 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
-        imgs[0].setOnLongClickListener(new View.OnLongClickListener() {
+        imgs[0].setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                if(v.getTag().toString().equals(idImgActual.toString())){
-                    text.setText((String)v.getTag().toString());
-                }
-
-                return false;
+            public void onClick(View v) {
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
-        imgs[2].setOnLongClickListener(new View.OnLongClickListener() {
+        imgs[2].setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                if(v.getTag().toString().equals(idImgActual.toString())){
-                    text.setText((String)v.getTag().toString());
-
-                }
-
-                return false;
+            public void onClick(View v) {
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
 
-        imgs[3].setOnLongClickListener(new View.OnLongClickListener() {
+        imgs[3].setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                if(v.getTag().toString().equals(idImgActual.toString())){
-                    text.setText((String)v.getTag().toString());
-                }
-
-                return false;
+            public void onClick(View v) {
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
 
-        imgs[1].setOnLongClickListener(new View.OnLongClickListener() {
+        imgs[1].setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                if(v.getTag().toString().equals(idImgActual.toString())){
-                    text.setText((String)v.getTag().toString());
-                }
-
-                return false;
+            public void onClick(View v) {
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
 
 
 
+    }
+
+    private void alert(View v, Boolean b){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+        String title="¡Has Perdido!";
+        if(b){
+            title="¡GANASTE!";
+            alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // continue with delete
+                }
+            });
+            MediaPlayer.create(v.getContext(), R.raw.relincho).start();
+        }
+        else{
+            MediaPlayer.create(v.getContext(), R.raw.resoplido).start();
+        }
+        alert.setTitle(title);
+        alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // do nothing
+            }
+        });
+        alert.setIcon(android.R.drawable.ic_dialog_alert);
+        alert.show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
-       /* List<String> listita = new ArrayList<String>();
-        listita.add("holaa");
-        listita.add("El Hombre rata");
-        listita.add("holaa");
-        listita.add("El Hombre rata");
-        ListView l = (ListView) findViewById(R.id.listaImg);
-        ArrayAdapter<String> ada = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,listita);
-        l.setAdapter(ada);
-        */
         return true;
     }
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
-        elementos.put("bajomontura",R.drawable.bajomontura);
-        elementos.put("cola",R.drawable.cola);
-        elementos.put("bozal",R.drawable.bozal);
-        elementos.put("casco",R.drawable.casco);
-        elementos.put("caballo",R.drawable.caballo);
-        elementos.put("zanahoria",R.drawable.zanahoria);
-        elementos.put("cuerda",R.drawable.cuerda);
-        elementos.put("arriador",R.drawable.arriador);
-        elementos.put("cepillo",R.drawable.cepillo);
+        elementos.put("Bajomontura",R.drawable.bajomontura);
+        elementos.put("Cola",R.drawable.cola);
+        elementos.put("Bozal",R.drawable.bozal);
+        elementos.put("Casco",R.drawable.casco);
+        elementos.put("Caballo",R.drawable.caballo);
+        elementos.put("Zanahoria",R.drawable.zanahoria);
+        elementos.put("Cuerda",R.drawable.cuerda);
+        elementos.put("Arriador",R.drawable.arriador);
+        elementos.put("Cepillo",R.drawable.cepillo);
         return elementos;
 
 
