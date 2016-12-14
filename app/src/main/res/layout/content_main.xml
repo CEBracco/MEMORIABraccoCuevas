@@ -38,11 +38,11 @@
                 android:textSize="50sp"/>
 
             <Button
+                android:text="Escuchar"
                 android:layout_width="109dp"
                 android:layout_height="96dp"
                 android:id="@+id/button_play_sound"
-                style="@style/Widget.AppCompat.Button"
-                android:background="@drawable/ic_volume_up_black_24dp" />
+                style="@style/Widget.AppCompat.Button" />
 
         </LinearLayout>
 
