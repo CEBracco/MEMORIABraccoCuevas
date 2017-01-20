@@ -39,12 +39,11 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
         String claveActual=claves.get(1);
 
-        final TextView text = (TextView) findViewById(R.id.textView);
-
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String word=SP.getString("pref_level_word","Caballo");
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
+        playButton.setText(word);
         final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         });
         final Integer idImgActual = componenteAMemorizar.get(word);
 
-        text.setText(word);
 
         ImageView[] imgs = new ImageView[4];
 
