@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,12 +24,21 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String word;
+    private String gender;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setIcon(R.drawable.cedica_logo);
+
+        toolbar.setLogo(R.mipmap.ic_launcher);
+
 
         //map nombre y posicion de imagen
         Map<String,Integer> componenteAMemorizar = this.setMapGame();
@@ -39,12 +48,13 @@ public class MainActivity extends AppCompatActivity {
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
         String claveActual=claves.get(1);
 
-        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String word=SP.getString("pref_level_word","Caballo");
+        SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        word=SP.getString("pref_level_word","Caballo");
+        gender=SP.getString("pref_voice_gender","m");
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         playButton.setText(word);
-        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
+        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(gender+"_"+word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         final Integer idImgActual = componenteAMemorizar.get(word);
-
 
         ImageView[] imgs = new ImageView[4];
 
@@ -162,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
         elementos.put("Bajomontura",R.drawable.bajomontura);
@@ -173,9 +183,8 @@ public class MainActivity extends AppCompatActivity {
         elementos.put("Cuerda",R.drawable.cuerda);
         elementos.put("Arriador",R.drawable.arriador);
         elementos.put("Cepillo",R.drawable.cepillo);
+
         return elementos;
-
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -192,5 +201,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        if(isPreferencesChanged(SP)){
+            recreate();
+            word=SP.getString("pref_level_word","Caballo");
+            gender=SP.getString("pref_voice_gender","m");
+        }
+    }
+
+    private boolean isPreferencesChanged(SharedPreferences SP){
+        String actualWordPref=SP.getString("pref_level_word","Caballo");
+        String actualGenderPref=SP.getString("pref_voice_gender","m");
+
+        return (word != null && !actualWordPref.equals(word)) || (gender != null && !actualGenderPref.equals(gender));
     }
 }

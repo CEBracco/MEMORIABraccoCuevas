@@ -4,6 +4,10 @@
         <item>Masculina</item>
         <item>Femenina</item>
     </string-array>
+    <string-array name="pref_voice_genders_values">
+        <item>m</item>
+        <item>f</item>
+    </string-array>
     <string-array name="pref_levels">
         <item>Inicial</item>
         <item>Medio</item>
