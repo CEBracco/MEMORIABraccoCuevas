@@ -4,16 +4,23 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -73,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
          imgs[1] =(ImageView)findViewById(R.id.imageView4);
 
-        List<Integer> assetsImg = new ArrayList<Integer>();
+        final List<Integer> assetsImg = new ArrayList<Integer>();
         assetsImg.add(R.drawable.bajomontura);
         assetsImg.add(R.drawable.cola);
         assetsImg.add(R.drawable.bozal);
@@ -87,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         Integer randPosition =(random.nextInt(4));
 
 
-        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
+//        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
+        imgs[(randPosition)].setImageResource(componenteAMemorizar.get(word));
         imgs[randPosition].setTag(componenteAMemorizar.get(word));
         int rand =((int)(Math.random()*(Max-Min))+Min);
         elementosEnPantalla.add(componenteAMemorizar.get(word));
@@ -98,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 if (i != randPosition) {
                     if (!elementosEnPantalla.contains(assetsImg.get(rand))) {
                         elementosEnPantalla.add(assetsImg.get(rand));
-                        imgs[i].setBackgroundResource(assetsImg.get(rand));
+//                        imgs[i].setBackgroundResource(assetsImg.get(rand));
+                        imgs[i].setImageResource(assetsImg.get(rand));
                         imgs[i].setTag(assetsImg.get(rand));
                         flag = false;
                     }
@@ -112,19 +121,8 @@ public class MainActivity extends AppCompatActivity {
         imgs[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-        imgs[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-
-        imgs[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                v.setPadding(5,0,5,0);
+                v.setBackgroundResource(R.color.colorFocus);
                 alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
@@ -132,15 +130,35 @@ public class MainActivity extends AppCompatActivity {
         imgs[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.setPadding(5,0,5,0);
+                v.setBackgroundResource(R.color.colorFocus);
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
+            }
+        });
+        imgs[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setPadding(5,0,5,0);
+                v.setBackgroundResource(R.color.colorFocus);
+                alert(v,v.getTag().toString().equals(idImgActual.toString()));
+            }
+        });
+
+        imgs[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setPadding(5,0,5,0);
+                v.setBackgroundResource(R.color.colorFocus);
                 alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
 
 
 
+
     }
 
-    private void alert(View v, Boolean b){
+    private void alert(final View v, Boolean b){
         final AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         String title="¡Has Perdido!";
         if(b){
@@ -148,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
             alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // continue with delete
+                    v.setBackgroundResource(0);
+                    v.setPadding(0,0,0,0);
                 }
             });
             MediaPlayer.create(v.getContext(), R.raw.relincho).start();
@@ -159,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
         alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // do nothing
+                v.setBackgroundResource(0);
+                v.setPadding(0,0,0,0);
             }
         });
         alert.setIcon(android.R.drawable.ic_dialog_alert);
