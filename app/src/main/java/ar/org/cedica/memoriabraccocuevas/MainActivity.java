@@ -4,23 +4,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -61,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         playButton.setText(word);
-        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(gender+"_"+word.toLowerCase(),"raw",MainActivity.this.getPackageName()));
+        final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(gender+"_"+word.toLowerCase().replace(' ','_'),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,15 +188,33 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
-        elementos.put("Bajomontura",R.drawable.bajomontura);
-        elementos.put("Cola",R.drawable.cola);
-        elementos.put("Bozal",R.drawable.bozal);
-        elementos.put("Casco",R.drawable.casco);
-        elementos.put("Caballo",R.drawable.caballo);
-        elementos.put("Zanahoria",R.drawable.zanahoria);
-        elementos.put("Cuerda",R.drawable.cuerda);
+        
+        elementos.put("Aros",R.drawable.aros);
         elementos.put("Arriador",R.drawable.arriador);
+        elementos.put("Bajomontura",R.drawable.bajomontura);
+        elementos.put("Bozal",R.drawable.bozal);
+        elementos.put("Caballo",R.drawable.caballo);
+        elementos.put("Cabezada",R.drawable.cabezada);
+        elementos.put("Casco",R.drawable.casco);
+        elementos.put("Cascos",R.drawable.cascos);
         elementos.put("Cepillo",R.drawable.cepillo);
+        elementos.put("Cinchon de volteo",R.drawable.cinchon_de_volteo);
+        elementos.put("Cola",R.drawable.cola);
+        elementos.put("Crines",R.drawable.crines);
+        elementos.put("Cuerda",R.drawable.cuerda);
+        elementos.put("Escarba vasos",R.drawable.escarba_vasos);
+        elementos.put("Fusta",R.drawable.fusta);
+        elementos.put("Matra",R.drawable.matra);
+        elementos.put("Montura",R.drawable.montura);
+        elementos.put("Monturin",R.drawable.monturin);
+        elementos.put("Ojos",R.drawable.ojos);
+        elementos.put("Orejas",R.drawable.orejas);
+        elementos.put("Palos",R.drawable.palos);
+        elementos.put("Pasto",R.drawable.pasto);
+        elementos.put("Pelota",R.drawable.pelota);
+        elementos.put("Rasqueta",R.drawable.rasqueta);
+        elementos.put("Riendas",R.drawable.riendas);
+        elementos.put("Zanahoria",R.drawable.zanahoria);
 
         return elementos;
     }
