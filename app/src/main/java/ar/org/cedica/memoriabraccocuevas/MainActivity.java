@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
          imgs[1] =(ImageView)findViewById(R.id.imageView4);
 
         final List<Integer> assetsImg = new ArrayList<Integer>();
+
         assetsImg.add(R.drawable.bajomontura);
         assetsImg.add(R.drawable.cola);
         assetsImg.add(R.drawable.bozal);
@@ -80,9 +81,31 @@ public class MainActivity extends AppCompatActivity {
         assetsImg.add(R.drawable.caballo);
         assetsImg.add(R.drawable.zanahoria);
         assetsImg.add(R.drawable.cepillo);
-        int Max=(6)+1;// rango para las imagenes
+        assetsImg.add(R.drawable.aros);
+        assetsImg.add(R.drawable.arriador);
+        assetsImg.add(R.drawable.cabezada);
+        assetsImg.add(R.drawable.cinchon_de_volteo);
+        assetsImg.add(R.drawable.cascos);
+        assetsImg.add(R.drawable.riendas);
+        assetsImg.add(R.drawable.rasqueta);
+        assetsImg.add(R.drawable.pasto);
+        assetsImg.add(R.drawable.orejas);
+        assetsImg.add(R.drawable.monturin);
+        assetsImg.add(R.drawable.ojos);
+        assetsImg.add(R.drawable.crines);
+        assetsImg.add(R.drawable.cuerda);
+        assetsImg.add(R.drawable.pelota);
+        assetsImg.add(R.drawable.fusta);
+        assetsImg.add(R.drawable.escarba_vasos);
+        assetsImg.add(R.drawable.palos);
+        assetsImg.add(R.drawable.matra);
+        assetsImg.add(R.drawable.montura);
+
+
+        int Max=(25)+1;// rango para las imagenes
         int Min=0;
         Random random = new Random();
+        
         Integer randPosition =(random.nextInt(4));
 
 
