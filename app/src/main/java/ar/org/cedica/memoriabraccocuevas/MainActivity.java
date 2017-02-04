@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         word=SP.getString("pref_level_word","Caballo");
+
         gender=SP.getString("pref_voice_gender","m");
+        String actualLevelPref=SP.getString("pref_level","Experto");
+        Integer cantImg=setCantImg(actualLevelPref);
+        Log.d("lal", cantImg.toString());
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         playButton.setText(word);
@@ -62,16 +67,12 @@ public class MainActivity extends AppCompatActivity {
         });
         final Integer idImgActual = componenteAMemorizar.get(word);
 
-        ImageView[] imgs = new ImageView[4];
 
-         imgs[0] =(ImageView)findViewById(R.id.imageView);
+        //es un arreglo dinamico, la longitud va a depender del nivel,
+        ImageView[] imgs = imgToView(cantImg);
 
-         imgs[2] =(ImageView)findViewById(R.id.imageView2);
 
-         imgs[3] =(ImageView)findViewById(R.id.imageView3);
-
-         imgs[1] =(ImageView)findViewById(R.id.imageView4);
-
+        //BRACOOOOOO aca tenes que enlazar las imagenes seleccionadas.
         final List<Integer> assetsImg = new ArrayList<Integer>();
 
         assetsImg.add(R.drawable.bajomontura);
@@ -105,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
         int Max=(25)+1;// rango para las imagenes
         int Min=0;
         Random random = new Random();
-        
-        Integer randPosition =(random.nextInt(4));
+
+
+        //depende del nivel
+        Integer randPosition =(random.nextInt(cantImg));
 
 
 //        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
@@ -115,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
         int rand =((int)(Math.random()*(Max-Min))+Min);
         elementosEnPantalla.add(componenteAMemorizar.get(word));
 
-        for(int i=0; i<4; i++) {
+        //depende del nivel
+        for(int i=0; i<cantImg; i++) {
             boolean flag = true;
             while (flag) {
                 if (i != randPosition) {
@@ -133,6 +137,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+        //mover a metodo aparte que setee las imagenes segun el nivel.
+        for (int i=0; i<cantImg; i++){
+            imgs[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    v.setPadding(5,0,5,0);
+                    v.setBackgroundResource(R.color.colorFocus);
+                    alert(v,v.getTag().toString().equals(idImgActual.toString()));
+                }
+            });
+        }
+        /*
         imgs[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 alert(v,v.getTag().toString().equals(idImgActual.toString()));
             }
         });
-
+        */
 
 
 
@@ -208,6 +225,45 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    private int setCantImg(String actualLevelPref){
+        int cantSeleccionImagen=0;
+        switch (actualLevelPref){
+            case "Inicial":
+            cantSeleccionImagen= 1;
+            break;
+            case "Medio":
+            cantSeleccionImagen= 2;
+            break;
+            case "Avanzado":
+            cantSeleccionImagen= 3;
+            break;
+            default:
+            cantSeleccionImagen= 4;
+            break;
+        }
+
+        return cantSeleccionImagen;
+
+    }
+    private ImageView[] imgToView(Integer cant) {
+        ImageView[] imgs = new ImageView[cant];
+
+        imgs[0] = (ImageView) findViewById(R.id.imageView);
+
+        if (cant >= 2) {
+            imgs[1] = (ImageView) findViewById(R.id.imageView4);
+        }
+        if (cant >= 3) {
+            imgs[2] =(ImageView)findViewById(R.id.imageView2);
+        }
+        if (cant >= 4) {
+
+            imgs[3] = (ImageView) findViewById(R.id.imageView3);
+
+        }
+        return imgs;
+    }
+
 
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
@@ -267,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
             recreate();
             word=SP.getString("pref_level_word","Caballo");
             gender=SP.getString("pref_voice_gender","m");
+            String actualLevelPref=SP.getString("pref_level","Experto");
         }
     }
 
