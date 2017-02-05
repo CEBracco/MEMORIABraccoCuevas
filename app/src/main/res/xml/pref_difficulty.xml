@@ -22,4 +22,7 @@
         android:entries="@array/pref_words"
         android:entryValues="@array/pref_words"
         android:defaultValue="Caballo" />
+    <Preference android:title="@string/imageSelectionButtonTitle"
+        android:key="imageSelectionButton"
+        android:summary="@string/imageSelectionButtonSummary"/>
 </PreferenceScreen>

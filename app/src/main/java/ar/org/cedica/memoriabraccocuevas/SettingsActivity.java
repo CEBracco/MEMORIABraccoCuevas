@@ -174,11 +174,20 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static class DifficultyPreferenceFragment extends PreferenceFragment {
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_difficulty);
             setHasOptionsMenu(true);
 
+            Preference button = findPreference("imageSelectionButton");
+            button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent=new Intent(getActivity(),ImageSelector.class);
+                    startActivity(intent);
+                    return true;
+                }
+            });
         }
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {

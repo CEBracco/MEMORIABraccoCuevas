@@ -75,4 +75,6 @@
     <string name="pref_time_value_label">Cantidad</string>
     <string name="pref_header_difficulty">Dificultad</string>
     <string name="pref_word_label">Palabra a adivinar</string>
+    <string name="imageSelectionButtonTitle">Imagenes del juego</string>
+    <string name="imageSelectionButtonSummary">Abrir grilla de seleccion</string>
 </resources>
