@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -23,13 +25,11 @@ public class ImageSelector extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_selector);
+        setupActionBar();
 
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> set=sp.getStringSet("images",new HashSet<String>());
         selected=new ArrayList<String>(set);
-
-        Log.d("pref",selected.toString());
-
 
         for (int i=1; i <= 26; i++){
             String imageViewId="imageSelector"+i;
@@ -54,6 +54,27 @@ public class ImageSelector extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    /**
+     * Set up the {@link android.app.ActionBar}, if the API is available.
+     */
+    private void setupActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            // Show the Up button in the action bar.
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
