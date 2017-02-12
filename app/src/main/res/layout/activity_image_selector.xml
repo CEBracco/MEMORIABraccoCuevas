@@ -29,97 +29,34 @@
                 android:layout_weight="0.1"
                 android:orientation="horizontal">
 
-
                 <ImageView
-                    android:id="@+id/aros"
+                    android:id="@+id/imageSelector1"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/aros" />
+                    android:src="@drawable/aros"
+                    android:tag="aros" />
                 <ImageView
-                    android:id="@+id/arriador"
+                    android:id="@+id/imageSelector2"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/arriador" />
+                    android:src="@drawable/arriador"
+                    android:tag="arriador" />
                 <ImageView
-                    android:id="@+id/bajomontura"
+                    android:id="@+id/imageSelector3"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/bajomontura" />
+                    android:src="@drawable/bajomontura"
+                    android:tag="bajomontura" />
                 <ImageView
-                    android:id="@+id/bozal"
+                    android:id="@+id/imageSelector4"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/bozal" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:id="@+id/caballo"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/caballo" />
-                <ImageView
-                    android:id="@+id/cabezada"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/cabezada" />
-                <ImageView
-                    android:id="@+id/casco"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/casco" />
-                <ImageView
-                    android:id="@+id/cascos"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/cascos" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:id="@+id/cepillo"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/cepillo" />
-                <ImageView
-                    android:id="@+id/cinchon_de_volteo"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/cinchon_de_volteo" />
-                <ImageView
-                    android:id="@+id/cola"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/cola" />
-                <ImageView
-                    android:id="@+id/crines"
-                    android:layout_width="0dp"
-                    android:layout_height="200dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/crines" />
+                    android:src="@drawable/bozal"
+                    android:tag="bozal" />
             </LinearLayout>
 
             <LinearLayout
@@ -129,29 +66,33 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/cuerda"
+                    android:id="@+id/imageSelector5"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/cuerda" />
+                    android:src="@drawable/caballo"
+                    android:tag="caballo" />
                 <ImageView
-                    android:id="@+id/escarba_vasos"
+                    android:id="@+id/imageSelector6"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/escarba_vasos" />
+                    android:src="@drawable/cabezada"
+                    android:tag="cabezada" />
                 <ImageView
-                    android:id="@+id/fusta"
+                    android:id="@+id/imageSelector7"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/fusta" />
+                    android:src="@drawable/casco"
+                    android:tag="casco" />
                 <ImageView
-                    android:id="@+id/matra"
+                    android:id="@+id/imageSelector8"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/matra" />
+                    android:src="@drawable/cascos"
+                    android:tag="cascos" />
             </LinearLayout>
 
             <LinearLayout
@@ -160,31 +101,34 @@
                 android:layout_weight="0.1"
                 android:orientation="horizontal">
 
-
                 <ImageView
-                    android:id="@+id/montura"
+                    android:id="@+id/imageSelector9"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/montura" />
+                    android:src="@drawable/cepillo"
+                    android:tag="cepillo" />
                 <ImageView
-                    android:id="@+id/monturin"
+                    android:id="@+id/imageSelector10"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/monturin" />
+                    android:src="@drawable/cinchon_de_volteo"
+                    android:tag="cinchon_de_volteo" />
                 <ImageView
-                    android:id="@+id/ojos"
+                    android:id="@+id/imageSelector11"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ojos" />
+                    android:src="@drawable/cola"
+                    android:tag="cola" />
                 <ImageView
-                    android:id="@+id/orejas"
+                    android:id="@+id/imageSelector12"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/orejas" />
+                    android:src="@drawable/crines"
+                    android:tag="crines" />
             </LinearLayout>
 
             <LinearLayout
@@ -193,31 +137,34 @@
                 android:layout_weight="0.1"
                 android:orientation="horizontal">
 
-
                 <ImageView
-                    android:id="@+id/palos"
+                    android:id="@+id/imageSelector13"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/palos" />
+                    android:src="@drawable/cuerda"
+                    android:tag="cuerda" />
                 <ImageView
-                    android:id="@+id/pasto"
+                    android:id="@+id/imageSelector14"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/pasto" />
+                    android:src="@drawable/escarba_vasos"
+                    android:tag="escarba_vasos" />
                 <ImageView
-                    android:id="@+id/pelota"
+                    android:id="@+id/imageSelector15"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/pelota" />
+                    android:src="@drawable/fusta"
+                    android:tag="fusta" />
                 <ImageView
-                    android:id="@+id/rasqueta"
+                    android:id="@+id/imageSelector16"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/rasqueta" />
+                    android:src="@drawable/matra"
+                    android:tag="matra" />
             </LinearLayout>
 
             <LinearLayout
@@ -226,19 +173,92 @@
                 android:layout_weight="0.1"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:id="@+id/imageSelector17"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/montura"
+                    android:tag="montura" />
+                <ImageView
+                    android:id="@+id/imageSelector18"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/monturin"
+                    android:tag="monturin" />
+                <ImageView
+                    android:id="@+id/imageSelector19"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/ojos"
+                    android:tag="ojos" />
+                <ImageView
+                    android:id="@+id/imageSelector20"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/orejas"
+                    android:tag="orejas" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/riendas"
+                    android:id="@+id/imageSelector21"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/riendas" />
+                    android:src="@drawable/palos"
+                    android:tag="palos" />
                 <ImageView
-                    android:id="@+id/zanahoria"
+                    android:id="@+id/imageSelector22"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/zanahoria" />
+                    android:src="@drawable/pasto"
+                    android:tag="pasto" />
+                <ImageView
+                    android:id="@+id/imageSelector23"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/pelota"
+                    android:tag="pelota" />
+                <ImageView
+                    android:id="@+id/imageSelector24"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/rasqueta"
+                    android:tag="rasqueta" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageSelector25"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/riendas"
+                    android:tag="riendas" />
+                <ImageView
+                    android:id="@+id/imageSelector26"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/zanahoria"
+                    android:tag="zanahoria" />
                 <ImageView
                     android:id="@+id/none"
                     android:layout_width="0dp"
