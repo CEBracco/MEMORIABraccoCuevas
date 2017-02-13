@@ -64,12 +64,15 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Set<String> selectedTemp = new HashSet<>();
         selectedTemp.add("caballo");
+        selectedTemp.add("aros");
+        selectedTemp.add("bozal");
+        selectedTemp.add("zanahoria");
         Set<String> set = sp.getStringSet("images", selectedTemp);
 
         selected = new ArrayList<String>(set);
         Collections.sort(selected);
         Integer a = selected.size();
-        Log.e("auuu", a.toString());
+
         word = this.obtenerPalabra();
 
 
@@ -167,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String palabraActual(Integer posAct){
-        Log.e("conti",posAct.toString());
+
 
         if (selected.size()>posAct+1){
             return selected.get(posAct+1);
@@ -181,10 +184,10 @@ public class MainActivity extends AppCompatActivity {
     private String obtenerPalabra(){
         SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
         Integer contador = sc.getInt("Contador",0);
-        Log.e("asasas",contador.toString());
+
         String palabra=palabraActual(contador);
         contador = nextPos(selected.size(),contador);
-        Log.e("asas",contador.toString());
+
         SharedPreferences.Editor mEdit1 = sc.edit();
         mEdit1.putInt("Contador",contador);
         mEdit1.commit();
@@ -276,7 +279,6 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> setListAssets(List<String> imgSeleccionadas){
         List<Integer> assetsImg = new ArrayList<Integer>();
         for(int i=0; i<imgSeleccionadas.size(); i++) {
-            Log.e("prueba",imgSeleccionadas.get(i));
             assetsImg.add(componenteAMemorizar.get(imgSeleccionadas.get(i)));
         }
        /* assetsImg.add(R.drawable.bajomontura);
