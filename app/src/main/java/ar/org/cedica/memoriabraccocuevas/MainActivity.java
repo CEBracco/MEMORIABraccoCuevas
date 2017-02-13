@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -16,22 +17,31 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
     private String word;
     private String gender;
+    private Integer nivelAct = 0;
+    String actualLevelPref;
+    ArrayList<String> selected;
+    Map<String,Integer> componenteAMemorizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
 
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -41,20 +51,33 @@ public class MainActivity extends AppCompatActivity {
 
 
         //map nombre y posicion de imagen
-        Map<String,Integer> componenteAMemorizar = this.setMapGame();
+        componenteAMemorizar = this.setMapGame();
 
         //este claves seguro va a desaparecer, no contaba con el preferences
-        ArrayList<String> claves =new  ArrayList<String>(componenteAMemorizar.keySet());
+        ArrayList<String> claves = new ArrayList<String>(componenteAMemorizar.keySet());
         List<Integer> elementosEnPantalla = new ArrayList<Integer>();
-        String claveActual=claves.get(1);
 
-        SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        word=SP.getString("pref_level_word","Caballo");
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+
+        //obtener el array
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Set<String> selectedTemp = new HashSet<>();
+        selectedTemp.add("caballo");
+        Set<String> set = sp.getStringSet("images", selectedTemp);
+
+        selected = new ArrayList<String>(set);
+        Collections.sort(selected);
+        Integer a = selected.size();
+        Log.e("auuu", a.toString());
+        word = this.obtenerPalabra();
+
+
 
         gender=SP.getString("pref_voice_gender","m");
-        String actualLevelPref=SP.getString("pref_level","Experto");
+         actualLevelPref=SP.getString("pref_level","Experto");
         Integer cantImg=setCantImg(actualLevelPref);
-        Log.d("lal", cantImg.toString());
+
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
         playButton.setText(word);
@@ -65,45 +88,22 @@ public class MainActivity extends AppCompatActivity {
                 mp.start();
             }
         });
+
+
+
+
+        //esto deberia usar la imagen seleccionada.
         final Integer idImgActual = componenteAMemorizar.get(word);
+        //final Integer idImgActual = this.nextElemen(arrHarcodeado,posActual);
 
 
         //es un arreglo dinamico, la longitud va a depender del nivel,
         ImageView[] imgs = imgToView(cantImg);
 
 
-        //BRACOOOOOO aca tenes que enlazar las imagenes seleccionadas.
-        final List<Integer> assetsImg = new ArrayList<Integer>();
 
-        assetsImg.add(R.drawable.bajomontura);
-        assetsImg.add(R.drawable.cola);
-        assetsImg.add(R.drawable.bozal);
-        assetsImg.add(R.drawable.casco);
-        assetsImg.add(R.drawable.caballo);
-        assetsImg.add(R.drawable.zanahoria);
-        assetsImg.add(R.drawable.cepillo);
-        assetsImg.add(R.drawable.aros);
-        assetsImg.add(R.drawable.arriador);
-        assetsImg.add(R.drawable.cabezada);
-        assetsImg.add(R.drawable.cinchon_de_volteo);
-        assetsImg.add(R.drawable.cascos);
-        assetsImg.add(R.drawable.riendas);
-        assetsImg.add(R.drawable.rasqueta);
-        assetsImg.add(R.drawable.pasto);
-        assetsImg.add(R.drawable.orejas);
-        assetsImg.add(R.drawable.monturin);
-        assetsImg.add(R.drawable.ojos);
-        assetsImg.add(R.drawable.crines);
-        assetsImg.add(R.drawable.cuerda);
-        assetsImg.add(R.drawable.pelota);
-        assetsImg.add(R.drawable.fusta);
-        assetsImg.add(R.drawable.escarba_vasos);
-        assetsImg.add(R.drawable.palos);
-        assetsImg.add(R.drawable.matra);
-        assetsImg.add(R.drawable.montura);
-
-
-        int Max=(25)+1;// rango para las imagenes
+        final List<Integer> assetsImg = setListAssets(selected);
+        int Max=(selected.size());// rango para las imagenes
         int Min=0;
         Random random = new Random();
 
@@ -113,10 +113,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 //        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
+        //viejo
         imgs[(randPosition)].setImageResource(componenteAMemorizar.get(word));
         imgs[randPosition].setTag(componenteAMemorizar.get(word));
         int rand =((int)(Math.random()*(Max-Min))+Min);
         elementosEnPantalla.add(componenteAMemorizar.get(word));
+
 
         //depende del nivel
         for(int i=0; i<cantImg; i++) {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     if (!elementosEnPantalla.contains(assetsImg.get(rand))) {
                         elementosEnPantalla.add(assetsImg.get(rand));
 //                        imgs[i].setBackgroundResource(assetsImg.get(rand));
+
                         imgs[i].setImageResource(assetsImg.get(rand));
                         imgs[i].setTag(assetsImg.get(rand));
                         flag = false;
@@ -149,45 +152,43 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        /*
-        imgs[0].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setPadding(5,0,5,0);
-                v.setBackgroundResource(R.color.colorFocus);
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-
-        imgs[1].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setPadding(5,0,5,0);
-                v.setBackgroundResource(R.color.colorFocus);
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-        imgs[2].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setPadding(5,0,5,0);
-                v.setBackgroundResource(R.color.colorFocus);
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-
-        imgs[3].setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setPadding(5,0,5,0);
-                v.setBackgroundResource(R.color.colorFocus);
-                alert(v,v.getTag().toString().equals(idImgActual.toString()));
-            }
-        });
-        */
 
 
 
+    }
+    private Integer nextPos(Integer sizeArray,Integer posAct){
+
+        if (sizeArray>posAct+1){
+            return posAct+1;
+        }else{
+            return 0;
+        }
+
+    }
+
+    private String palabraActual(Integer posAct){
+        Log.e("conti",posAct.toString());
+
+        if (selected.size()>posAct+1){
+            return selected.get(posAct+1);
+
+        }else{
+            return selected.get(0);
+        }
+
+    }
+
+    private String obtenerPalabra(){
+        SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
+        Integer contador = sc.getInt("Contador",0);
+        Log.e("asasas",contador.toString());
+        String palabra=palabraActual(contador);
+        contador = nextPos(selected.size(),contador);
+        Log.e("asas",contador.toString());
+        SharedPreferences.Editor mEdit1 = sc.edit();
+        mEdit1.putInt("Contador",contador);
+        mEdit1.commit();
+        return palabra;
     }
 
     private void alert(final View v, Boolean b){
@@ -198,8 +199,10 @@ public class MainActivity extends AppCompatActivity {
             alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // continue with delete
+
                     v.setBackgroundResource(0);
                     v.setPadding(0,0,0,0);
+                    recreate();
                 }
             });
             MediaPlayer.create(v.getContext(), R.raw.relincho).start();
@@ -225,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+    //devuelve la cantidad de imagenes segun el nivel.
     private int setCantImg(String actualLevelPref){
         int cantSeleccionImagen=0;
         switch (actualLevelPref){
@@ -245,55 +249,94 @@ public class MainActivity extends AppCompatActivity {
         return cantSeleccionImagen;
 
     }
+
+    //devuelve un arreglo de imagenes segun el nivel.
     private ImageView[] imgToView(Integer cant) {
         ImageView[] imgs = new ImageView[cant];
 
         imgs[0] = (ImageView) findViewById(R.id.imageView);
 
         if (cant >= 2) {
-            imgs[1] = (ImageView) findViewById(R.id.imageView4);
+            imgs[1] =(ImageView)findViewById(R.id.imageView3);
         }
         if (cant >= 3) {
-            imgs[2] =(ImageView)findViewById(R.id.imageView2);
+
+            imgs[2] = (ImageView) findViewById(R.id.imageView4);
         }
         if (cant >= 4) {
 
-            imgs[3] = (ImageView) findViewById(R.id.imageView3);
+            imgs[3] = (ImageView) findViewById(R.id.imageView2);
 
         }
         return imgs;
     }
 
 
+    //seteo un arreglo con todos los ids de las imagenes para usar como posibles selecciones
+    private List<Integer> setListAssets(List<String> imgSeleccionadas){
+        List<Integer> assetsImg = new ArrayList<Integer>();
+        for(int i=0; i<imgSeleccionadas.size(); i++) {
+            Log.e("prueba",imgSeleccionadas.get(i));
+            assetsImg.add(componenteAMemorizar.get(imgSeleccionadas.get(i)));
+        }
+       /* assetsImg.add(R.drawable.bajomontura);
+        assetsImg.add(R.drawable.cola);
+        assetsImg.add(R.drawable.bozal);
+        assetsImg.add(R.drawable.casco);
+        assetsImg.add(R.drawable.caballo);
+        assetsImg.add(R.drawable.zanahoria);
+        assetsImg.add(R.drawable.cepillo);
+        assetsImg.add(R.drawable.aros);
+        assetsImg.add(R.drawable.arriador);
+        assetsImg.add(R.drawable.cabezada);
+        assetsImg.add(R.drawable.cinchon_de_volteo);
+        assetsImg.add(R.drawable.cascos);
+        assetsImg.add(R.drawable.riendas);
+        assetsImg.add(R.drawable.rasqueta);
+        assetsImg.add(R.drawable.pasto);
+        assetsImg.add(R.drawable.orejas);
+        assetsImg.add(R.drawable.monturin);
+        assetsImg.add(R.drawable.ojos);
+        assetsImg.add(R.drawable.crines);
+        assetsImg.add(R.drawable.cuerda);
+        assetsImg.add(R.drawable.pelota);
+        assetsImg.add(R.drawable.fusta);
+        assetsImg.add(R.drawable.escarba_vasos);
+        assetsImg.add(R.drawable.palos);
+        assetsImg.add(R.drawable.matra);
+        assetsImg.add(R.drawable.montura);*/
+        return assetsImg;
+    }
+
     private Map<String,Integer> setMapGame(){
         Map<String,Integer> elementos = new HashMap<String,Integer>();
         
-        elementos.put("Aros",R.drawable.aros);
-        elementos.put("Arriador",R.drawable.arriador);
-        elementos.put("Bajomontura",R.drawable.bajomontura);
-        elementos.put("Bozal",R.drawable.bozal);
-        elementos.put("Caballo",R.drawable.caballo);
-        elementos.put("Cabezada",R.drawable.cabezada);
-        elementos.put("Casco",R.drawable.casco);
-        elementos.put("Cascos",R.drawable.cascos);
-        elementos.put("Cepillo",R.drawable.cepillo);
-        elementos.put("Cinchon de volteo",R.drawable.cinchon_de_volteo);
-        elementos.put("Cola",R.drawable.cola);
-        elementos.put("Crines",R.drawable.crines);
-        elementos.put("Cuerda",R.drawable.cuerda);
-        elementos.put("Escarba vasos",R.drawable.escarba_vasos);
-        elementos.put("Fusta",R.drawable.fusta);
-        elementos.put("Matra",R.drawable.matra);
-        elementos.put("Montura",R.drawable.montura);
-        elementos.put("Monturin",R.drawable.monturin);
-        elementos.put("Ojos",R.drawable.ojos);
-        elementos.put("Orejas",R.drawable.orejas);
-        elementos.put("Palos",R.drawable.palos);
-        elementos.put("Pasto",R.drawable.pasto);
-        elementos.put("Pelota",R.drawable.pelota);
-        elementos.put("Rasqueta",R.drawable.rasqueta);
-        elementos.put("Riendas",R.drawable.riendas);
-        elementos.put("Zanahoria",R.drawable.zanahoria);
+        elementos.put("aros",R.drawable.aros);
+        elementos.put("arriador",R.drawable.arriador);
+        elementos.put("bajomontura",R.drawable.bajomontura);
+        elementos.put("bozal",R.drawable.bozal);
+        elementos.put("caballo",R.drawable.caballo);
+        elementos.put("cabezada",R.drawable.cabezada);
+        elementos.put("casco",R.drawable.casco);
+        elementos.put("cascos",R.drawable.cascos);
+        elementos.put("cepillo",R.drawable.cepillo);
+        elementos.put("cinchon de volteo",R.drawable.cinchon_de_volteo);
+        elementos.put("cola",R.drawable.cola);
+        elementos.put("crines",R.drawable.crines);
+        elementos.put("cuerda",R.drawable.cuerda);
+        elementos.put("escarba vasos",R.drawable.escarba_vasos);
+        elementos.put("fusta",R.drawable.fusta);
+        elementos.put("matra",R.drawable.matra);
+        elementos.put("montura",R.drawable.montura);
+        elementos.put("monturin",R.drawable.monturin);
+        elementos.put("ojos",R.drawable.ojos);
+        elementos.put("orejas",R.drawable.orejas);
+        elementos.put("palos",R.drawable.palos);
+        elementos.put("pasto",R.drawable.pasto);
+        elementos.put("pelota",R.drawable.pelota);
+        elementos.put("rasqueta",R.drawable.rasqueta);
+        elementos.put("riendas",R.drawable.riendas);
+        elementos.put("zanahoria",R.drawable.zanahoria);
 
         return elementos;
     }
@@ -321,16 +364,16 @@ public class MainActivity extends AppCompatActivity {
 
         if(isPreferencesChanged(SP)){
             recreate();
-            word=SP.getString("pref_level_word","Caballo");
+           // word=SP.getString("pref_level_word","Caballo");
             gender=SP.getString("pref_voice_gender","m");
             String actualLevelPref=SP.getString("pref_level","Experto");
         }
     }
 
     private boolean isPreferencesChanged(SharedPreferences SP){
-        String actualWordPref=SP.getString("pref_level_word","Caballo");
+        //String actualWordPref=SP.getString("pref_level_word","Caballo");
         String actualGenderPref=SP.getString("pref_voice_gender","m");
 
-        return (word != null && !actualWordPref.equals(word)) || (gender != null && !actualGenderPref.equals(gender));
+        return  (gender != null && !actualGenderPref.equals(gender));
     }
 }
