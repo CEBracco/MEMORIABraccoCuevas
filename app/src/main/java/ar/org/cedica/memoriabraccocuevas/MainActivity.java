@@ -10,7 +10,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -86,12 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         //obtener el array
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> selectedTemp = new HashSet<>();
-        selectedTemp.add("caballo");
-        selectedTemp.add("aros");
-        selectedTemp.add("bozal");
-        selectedTemp.add("zanahoria");
-        Set<String> set = sp.getStringSet("images", selectedTemp);
+
+        Set<String> set = sp.getStringSet("images", getDefaultSelectedWords());
 
         selected = new ArrayList<String>(set);
         Collections.sort(selected);
@@ -107,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
-        playButton.setText(word);
+        playButton.setText(word.replace('_',' '));
         final MediaPlayer mp = MediaPlayer.create(this, MainActivity.this.getResources().getIdentifier(gender+"_"+word.toLowerCase().replace(' ','_'),"raw",MainActivity.this.getPackageName()));
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -337,11 +332,11 @@ public class MainActivity extends AppCompatActivity {
         elementos.put("casco",R.drawable.casco);
         elementos.put("cascos",R.drawable.cascos);
         elementos.put("cepillo",R.drawable.cepillo);
-        elementos.put("cinchon de volteo",R.drawable.cinchon_de_volteo);
+        elementos.put("cinchon_de_volteo",R.drawable.cinchon_de_volteo);
         elementos.put("cola",R.drawable.cola);
         elementos.put("crines",R.drawable.crines);
         elementos.put("cuerda",R.drawable.cuerda);
-        elementos.put("escarba vasos",R.drawable.escarba_vasos);
+        elementos.put("escarba_vasos",R.drawable.escarba_vasos);
         elementos.put("fusta",R.drawable.fusta);
         elementos.put("matra",R.drawable.matra);
         elementos.put("montura",R.drawable.montura);
@@ -411,5 +406,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         timerStopped=true;
+    }
+
+    private Set<String> getDefaultSelectedWords(){
+        HashSet<String> wordsSet= new HashSet<String>();
+
+        wordsSet.add("aros");
+        wordsSet.add("arriador");
+        wordsSet.add("bajomontura");
+        wordsSet.add("bozal");
+        wordsSet.add("caballo");
+        wordsSet.add("cabezada");
+        wordsSet.add("casco");
+        wordsSet.add("cascos");
+        wordsSet.add("cepillo");
+        wordsSet.add("cinchon_de_volteo");
+        wordsSet.add("cola");
+        wordsSet.add("crines");
+        wordsSet.add("cuerda");
+        wordsSet.add("escarba_vasos");
+        wordsSet.add("fusta");
+        wordsSet.add("matra");
+        wordsSet.add("montura");
+        wordsSet.add("monturin");
+        wordsSet.add("ojos");
+        wordsSet.add("orejas");
+        wordsSet.add("palos");
+        wordsSet.add("pasto");
+        wordsSet.add("pelota");
+        wordsSet.add("rasqueta");
+        wordsSet.add("riendas");
+        wordsSet.add("zanahoria");
+
+        return wordsSet;
     }
 }

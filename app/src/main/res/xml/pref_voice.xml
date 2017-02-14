@@ -1,12 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- A 'parent' preference, which enables/disables child preferences (below)
-         when checked/unchecked. -->
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="pref_voz"
-        android:title="@string/pref_voz" />
-
     <ListPreference
         android:key="pref_voice_gender"
         android:title="@string/pref_voice_gender"
