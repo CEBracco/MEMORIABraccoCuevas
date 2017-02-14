@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
         //depende del nivel
         Integer randPosition =(random.nextInt(cantImg));
-        Log.d("randposition",randPosition.toString());
 
 //        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
         //viejo
