@@ -5,9 +5,8 @@
         android:title="@string/pref_level_label"
         android:entries="@array/pref_levels"
         android:entryValues="@array/pref_levels" />
-
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         android:key="pref_enable_time"
         android:title="@string/pref_enable_time_label" />
     <EditTextPreference
@@ -16,12 +15,6 @@
         android:title="@string/pref_time_value_label"
         android:key="pref_time_value"
         android:inputType="number" />
-    <ListPreference
-        android:key="pref_level_word"
-        android:title="@string/pref_word_label"
-        android:entries="@array/pref_words"
-        android:entryValues="@array/pref_words"
-        android:defaultValue="Caballo" />
     <Preference android:title="@string/imageSelectionButtonTitle"
         android:key="imageSelectionButton"
         android:summary="@string/imageSelectionButtonSummary"/>

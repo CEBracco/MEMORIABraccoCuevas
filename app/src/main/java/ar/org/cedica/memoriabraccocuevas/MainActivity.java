@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import android.os.Handler;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,12 +36,36 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> selected;
     Map<String,Integer> componenteAMemorizar;
 
+    private Boolean timerStopped=true;
+    private Handler timer=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if(!timerStopped){
+                MediaPlayer.create(MainActivity.this, R.raw.resoplido).start();
+
+                final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                String title="¡Has Perdido!";
+
+                alert.setTitle(title);
+                alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        startTimer();
+                    }
+                });
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.show();
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
 
         setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -146,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             imgs[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    timerStopped=true;
                     v.setPadding(5,0,5,0);
                     v.setBackgroundResource(R.color.colorFocus);
                     alert(v,v.getTag().toString().equals(idImgActual.toString()));
@@ -199,7 +226,6 @@ public class MainActivity extends AppCompatActivity {
             alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     // continue with delete
-
                     v.setBackgroundResource(0);
                     v.setPadding(0,0,0,0);
                     recreate();
@@ -216,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 // do nothing
                 v.setBackgroundResource(0);
                 v.setPadding(0,0,0,0);
+                startTimer();
             }
         });
         alert.setIcon(android.R.drawable.ic_dialog_alert);
@@ -350,6 +377,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        startTimer();
+
         SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         if(isPreferencesChanged(SP)){
@@ -363,7 +392,24 @@ public class MainActivity extends AppCompatActivity {
     private boolean isPreferencesChanged(SharedPreferences SP){
         //String actualWordPref=SP.getString("pref_level_word","Caballo");
         String actualGenderPref=SP.getString("pref_voice_gender","m");
+        String levelPref=SP.getString("pref_level","Experto");
+        //controlar el nivel y el arreglo de imagenes
+        return  (gender != null && !actualGenderPref.equals(gender)) || (actualLevelPref != null && !levelPref.equals(actualLevelPref));
+    }
 
-        return  (gender != null && !actualGenderPref.equals(gender));
+    private  void startTimer(){
+        SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        if(SP.getBoolean("pref_enable_time",false)){
+            timerStopped=false;
+            Integer segundos=Integer.parseInt(SP.getString("pref_time_value","10"));
+            timer.sendMessageDelayed(timer.obtainMessage(),segundos*1000);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timerStopped=true;
     }
 }
