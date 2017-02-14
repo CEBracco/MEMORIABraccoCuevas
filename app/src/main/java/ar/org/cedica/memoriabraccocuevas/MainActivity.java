@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -17,7 +16,6 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         //depende del nivel
         Integer randPosition =(random.nextInt(cantImg));
-
+        Log.d("randposition",randPosition.toString());
 
 //        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
         //viejo
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             boolean flag = true;
             while (flag) {
                 if (i != randPosition) {
-                    if (!elementosEnPantalla.contains(assetsImg.get(rand))) {
+                    if (assetsImg.get(rand) != null && !elementosEnPantalla.contains(assetsImg.get(rand))) {
                         elementosEnPantalla.add(assetsImg.get(rand));
 //                        imgs[i].setBackgroundResource(assetsImg.get(rand));
 
@@ -257,20 +255,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageView[] imgToView(Integer cant) {
         ImageView[] imgs = new ImageView[cant];
 
-        imgs[0] = (ImageView) findViewById(R.id.imageView);
-
-        if (cant >= 2) {
-            imgs[1] =(ImageView)findViewById(R.id.imageView3);
+        for(int i=0; i < imgs.length ; i++){
+            int resId=getResources().getIdentifier("imageView"+i,"id",getPackageName());
+            imgs[i]=(ImageView) findViewById(resId);
         }
-        if (cant >= 3) {
 
-            imgs[2] = (ImageView) findViewById(R.id.imageView4);
-        }
-        if (cant >= 4) {
-
-            imgs[3] = (ImageView) findViewById(R.id.imageView2);
-
-        }
         return imgs;
     }
 
