@@ -77,4 +77,5 @@
     <string name="pref_word_label">Palabra a adivinar</string>
     <string name="imageSelectionButtonTitle">Imagenes del juego</string>
     <string name="imageSelectionButtonSummary">Abrir grilla de seleccion</string>
+    <string name="timeCategoryTitle">Tiempo del juego</string>
 </resources>

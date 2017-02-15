@@ -5,16 +5,18 @@
         android:title="@string/pref_level_label"
         android:entries="@array/pref_levels"
         android:entryValues="@array/pref_levels" />
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="pref_enable_time"
-        android:title="@string/pref_enable_time_label" />
-    <EditTextPreference
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_time_value_label"
-        android:key="pref_time_value"
-        android:inputType="number" />
+    <PreferenceCategory android:title="@string/timeCategoryTitle">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="pref_enable_time"
+            android:title="@string/pref_enable_time_label" />
+        <EditTextPreference
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_time_value_label"
+            android:key="pref_time_value"
+            android:inputType="number" />
+    </PreferenceCategory>
     <Preference android:title="@string/imageSelectionButtonTitle"
         android:key="imageSelectionButton"
         android:summary="@string/imageSelectionButtonSummary"/>

@@ -10,6 +10,7 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 MediaPlayer.create(MainActivity.this, R.raw.resoplido).start();
 
                 final AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
-                String title="¡Has Perdido!";
+                String title="¡Tiempo Agotado!";
 
                 alert.setTitle(title);
                 alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
@@ -291,32 +292,6 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0; i<imgSeleccionadas.size(); i++) {
             assetsImg.add(componenteAMemorizar.get(imgSeleccionadas.get(i)));
         }
-       /* assetsImg.add(R.drawable.bajomontura);
-        assetsImg.add(R.drawable.cola);
-        assetsImg.add(R.drawable.bozal);
-        assetsImg.add(R.drawable.casco);
-        assetsImg.add(R.drawable.caballo);
-        assetsImg.add(R.drawable.zanahoria);
-        assetsImg.add(R.drawable.cepillo);
-        assetsImg.add(R.drawable.aros);
-        assetsImg.add(R.drawable.arriador);
-        assetsImg.add(R.drawable.cabezada);
-        assetsImg.add(R.drawable.cinchon_de_volteo);
-        assetsImg.add(R.drawable.cascos);
-        assetsImg.add(R.drawable.riendas);
-        assetsImg.add(R.drawable.rasqueta);
-        assetsImg.add(R.drawable.pasto);
-        assetsImg.add(R.drawable.orejas);
-        assetsImg.add(R.drawable.monturin);
-        assetsImg.add(R.drawable.ojos);
-        assetsImg.add(R.drawable.crines);
-        assetsImg.add(R.drawable.cuerda);
-        assetsImg.add(R.drawable.pelota);
-        assetsImg.add(R.drawable.fusta);
-        assetsImg.add(R.drawable.escarba_vasos);
-        assetsImg.add(R.drawable.palos);
-        assetsImg.add(R.drawable.matra);
-        assetsImg.add(R.drawable.montura);*/
         return assetsImg;
     }
 
@@ -377,19 +352,27 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences SP=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         if(isPreferencesChanged(SP)){
-            recreate();
-           // word=SP.getString("pref_level_word","Caballo");
             gender=SP.getString("pref_voice_gender","m");
             String actualLevelPref=SP.getString("pref_level","Experto");
+            recreate();
         }
     }
 
     private boolean isPreferencesChanged(SharedPreferences SP){
-        //String actualWordPref=SP.getString("pref_level_word","Caballo");
         String actualGenderPref=SP.getString("pref_voice_gender","m");
         String levelPref=SP.getString("pref_level","Experto");
-        //controlar el nivel y el arreglo de imagenes
-        return  (gender != null && !actualGenderPref.equals(gender)) || (actualLevelPref != null && !levelPref.equals(actualLevelPref));
+        Set<String> imagesPref = SP.getStringSet("images", getDefaultSelectedWords());
+
+        return  (gender != null && !actualGenderPref.equals(gender)) || (actualLevelPref != null && !levelPref.equals(actualLevelPref)) || !equalsArray(new ArrayList<String>(imagesPref));
+    }
+
+    private Boolean equalsArray(ArrayList<String> selectedPref){
+        if(selected != null && selectedPref.size() == selected.size()){
+            if(selectedPref.containsAll(selected)){
+                return true;
+            }
+        }
+        return false;
     }
 
     private  void startTimer(){

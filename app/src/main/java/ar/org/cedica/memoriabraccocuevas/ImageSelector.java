@@ -28,7 +28,7 @@ public class ImageSelector extends AppCompatActivity {
         setupActionBar();
 
         SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Set<String> set=sp.getStringSet("images",new HashSet<String>());
+        Set<String> set=sp.getStringSet("images",getDefaultSelectedWords());
         selected=new ArrayList<String>(set);
 
         for (int i=1; i <= 26; i++){
@@ -81,13 +81,48 @@ public class ImageSelector extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Set<String> set=new HashSet<String>();
-        set.addAll(selected);
+        if(selected.size() >= 4){
+            Set<String> set=new HashSet<String>();
+            set.addAll(selected);
 
-        SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        SharedPreferences.Editor editor=sp.edit();
+            SharedPreferences sp= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences.Editor editor=sp.edit();
 
-        editor.putStringSet("images",set);
-        editor.commit();
+            editor.putStringSet("images",set);
+            editor.commit();
+        }
+    }
+
+    private Set<String> getDefaultSelectedWords(){
+        HashSet<String> wordsSet= new HashSet<String>();
+
+        wordsSet.add("aros");
+        wordsSet.add("arriador");
+        wordsSet.add("bajomontura");
+        wordsSet.add("bozal");
+        wordsSet.add("caballo");
+        wordsSet.add("cabezada");
+        wordsSet.add("casco");
+        wordsSet.add("cascos");
+        wordsSet.add("cepillo");
+        wordsSet.add("cinchon_de_volteo");
+        wordsSet.add("cola");
+        wordsSet.add("crines");
+        wordsSet.add("cuerda");
+        wordsSet.add("escarba_vasos");
+        wordsSet.add("fusta");
+        wordsSet.add("matra");
+        wordsSet.add("montura");
+        wordsSet.add("monturin");
+        wordsSet.add("ojos");
+        wordsSet.add("orejas");
+        wordsSet.add("palos");
+        wordsSet.add("pasto");
+        wordsSet.add("pelota");
+        wordsSet.add("rasqueta");
+        wordsSet.add("riendas");
+        wordsSet.add("zanahoria");
+
+        return wordsSet;
     }
 }
