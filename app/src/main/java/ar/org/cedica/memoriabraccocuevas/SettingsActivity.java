@@ -121,7 +121,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @Override
     public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
+        return false;
     }
 
     /**

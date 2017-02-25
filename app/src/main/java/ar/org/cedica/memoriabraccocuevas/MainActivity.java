@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         gender=SP.getString("pref_voice_gender","m");
          actualLevelPref=SP.getString("pref_level","Experto");
-        Integer cantImg=setCantImg(actualLevelPref);
+        final Integer cantImg=setCantImg(actualLevelPref);
 
 
         Button playButton = (Button) this.findViewById(R.id.button_play_sound);
@@ -228,21 +228,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             MediaPlayer.create(v.getContext(), R.raw.relincho).start();
+            alert.setTitle(title);
+            alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    // do nothing
+                    v.setBackgroundResource(0);
+                    v.setPadding(0,0,0,0);
+                    startTimer();
+                }
+            });
+            alert.setIcon(android.R.drawable.ic_dialog_alert);
+            alert.show();
         }
         else{
-            MediaPlayer.create(v.getContext(), R.raw.resoplido).start();
+            MediaPlayer mp=MediaPlayer.create(v.getContext(), R.raw.resoplido);
+            mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    v.setBackgroundResource(0);
+                    v.setPadding(0,0,0,0);
+                }
+            });
+            mp.start();
         }
-        alert.setTitle(title);
-        alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // do nothing
-                v.setBackgroundResource(0);
-                v.setPadding(0,0,0,0);
-                startTimer();
-            }
-        });
-        alert.setIcon(android.R.drawable.ic_dialog_alert);
-        alert.show();
     }
 
     @Override

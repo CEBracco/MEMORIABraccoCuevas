@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MEMORIABraccoCuevas</string>
+    <string name="app_name">MEMORIA Bracco Cuevas</string>
     <string name="action_settings">Configuración</string>
     <string name="title_activity_settings">Configuración</string>
 
@@ -72,7 +72,7 @@
     <string name="pref_voice_gender">Género</string>
     <string name="pref_level_label">Nivel</string>
     <string name="pref_enable_time_label">Tiempo</string>
-    <string name="pref_time_value_label">Cantidad</string>
+    <string name="pref_time_value_label">Cantidad de tiempo en segs.</string>
     <string name="pref_header_difficulty">Dificultad</string>
     <string name="pref_word_label">Palabra a adivinar</string>
     <string name="imageSelectionButtonTitle">Imagenes del juego</string>
