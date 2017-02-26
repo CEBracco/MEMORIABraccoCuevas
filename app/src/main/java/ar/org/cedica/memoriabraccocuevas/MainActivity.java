@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private Integer nivelAct = 0;
     String actualLevelPref;
     ArrayList<String> selected;
+    ArrayList<String> imagenesDistractoras;
     Map<String,Integer> componenteAMemorizar;
+
 
     private Boolean timerStopped=true;
     private Handler timer=new Handler(){
@@ -90,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         Set<String> set = sp.getStringSet("images", getDefaultSelectedWords());
 
         selected = new ArrayList<String>(set);
+
         Collections.sort(selected);
         Integer a = selected.size();
 
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         gender=SP.getString("pref_voice_gender","m");
-         actualLevelPref=SP.getString("pref_level","Experto");
+        actualLevelPref=SP.getString("pref_level","Experto");
         final Integer cantImg=setCantImg(actualLevelPref);
 
 
@@ -125,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        final List<Integer> assetsImg = setListAssets(selected);
-        int Max=(selected.size());// rango para las imagenes
+        final List<Integer> assetsImg = setListAssets(claves);
+        int Max=(claves.size());// rango para las imagenes
         int Min=0;
         Random random = new Random();
 
@@ -204,41 +207,66 @@ public class MainActivity extends AppCompatActivity {
     private String obtenerPalabra(){
         SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
         Integer contador = sc.getInt("Contador",0);
-
+        SharedPreferences.Editor mEdit1 = sc.edit();
+        if(contador==0){
+            mEdit1.putBoolean("Finaliza",false);
+        }
+        if((contador+1)==selected.size()){
+            mEdit1.putBoolean("Finaliza",true);
+        }
+       
         String palabra=palabraActual(contador);
         contador = nextPos(selected.size(),contador);
 
-        SharedPreferences.Editor mEdit1 = sc.edit();
+
         mEdit1.putInt("Contador",contador);
         mEdit1.commit();
         return palabra;
     }
+    private Boolean finalizoNivel(){
+        SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean finalizo = sc.getBoolean("Finaliza",false);
+        return finalizo;
+    }
 
     private void alert(final View v, Boolean b){
-        final AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
         String title="¡Has Perdido!";
         if(b){
-            title="¡GANASTE!";
-            alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // continue with delete
-                    v.setBackgroundResource(0);
-                    v.setPadding(0,0,0,0);
-                    recreate();
-                }
-            });
             MediaPlayer.create(v.getContext(), R.raw.relincho).start();
-            alert.setTitle(title);
-            alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    // do nothing
-                    v.setBackgroundResource(0);
-                    v.setPadding(0,0,0,0);
-                    startTimer();
-                }
-            });
-            alert.setIcon(android.R.drawable.ic_dialog_alert);
-            alert.show();
+            if(finalizoNivel()){
+                final AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+                title="¡GANASTE!";
+                alert.setTitle(title);
+                alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        v.setBackgroundResource(0);
+                        v.setPadding(0,0,0,0);
+                        setNivel();
+                        recreate();
+                    }
+                });
+
+
+                alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        v.setBackgroundResource(0);
+                        v.setPadding(0,0,0,0);
+                        startTimer();
+                    }
+                });
+                alert.setIcon(android.R.drawable.ic_dialog_alert);
+                alert.show();
+
+            }else{
+                recreate();
+            }
+
+
+            //hay que hacer un sleep por el sonido
+
+
         }
         else{
             MediaPlayer mp=MediaPlayer.create(v.getContext(), R.raw.resoplido);
@@ -278,6 +306,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return cantSeleccionImagen;
+
+    }
+    private void setNivel(){
+        List<String> nivels = new ArrayList<String>();
+        nivels.add("Inicial");
+        nivels.add("Medio");
+        nivels.add("Avanzado");
+        nivels.add("Experto");
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Integer pos =nivels.indexOf(actualLevelPref);
+        if(pos==nivels.size()-1) {
+            pos = 0;
+        }else{
+            pos = pos + 1;
+        }
+        SharedPreferences.Editor mEdit1 = sp.edit();
+        mEdit1.putString("pref_level",nivels.get(pos));
+        mEdit1.commit();
 
     }
 
