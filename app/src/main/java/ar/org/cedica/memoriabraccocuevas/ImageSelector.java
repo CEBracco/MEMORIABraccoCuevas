@@ -97,7 +97,7 @@ public class ImageSelector extends AppCompatActivity {
         HashSet<String> wordsSet= new HashSet<String>();
 
         wordsSet.add("aros");
-        wordsSet.add("arriador");
+        wordsSet.add("arreador");
         wordsSet.add("bajomontura");
         wordsSet.add("bozal");
         wordsSet.add("caballo");
@@ -109,7 +109,7 @@ public class ImageSelector extends AppCompatActivity {
         wordsSet.add("cola");
         wordsSet.add("crines");
         wordsSet.add("cuerda");
-        wordsSet.add("escarba_vasos");
+        wordsSet.add("escarbavasos");
         wordsSet.add("fusta");
         wordsSet.add("matra");
         wordsSet.add("montura");

@@ -41,8 +41,8 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/arriador"
-                    android:tag="arriador" />
+                    android:src="@drawable/arreador"
+                    android:tag="arreador" />
                 <ImageView
                     android:id="@+id/imageSelector3"
                     android:layout_width="0dp"
@@ -149,8 +149,8 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:layout_weight="1"
-                    android:src="@drawable/escarba_vasos"
-                    android:tag="escarba_vasos" />
+                    android:src="@drawable/escarbavasos"
+                    android:tag="escarbavasos" />
                 <ImageView
                     android:id="@+id/imageSelector15"
                     android:layout_width="0dp"

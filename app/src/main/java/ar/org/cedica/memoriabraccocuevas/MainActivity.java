@@ -10,7 +10,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -354,7 +353,7 @@ public class MainActivity extends AppCompatActivity {
         Map<String,Integer> elementos = new HashMap<String,Integer>();
         
         elementos.put("aros",R.drawable.aros);
-        elementos.put("arriador",R.drawable.arriador);
+        elementos.put("arreador",R.drawable.arreador);
         elementos.put("bajomontura",R.drawable.bajomontura);
         elementos.put("bozal",R.drawable.bozal);
         elementos.put("caballo",R.drawable.caballo);
@@ -366,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
         elementos.put("cola",R.drawable.cola);
         elementos.put("crines",R.drawable.crines);
         elementos.put("cuerda",R.drawable.cuerda);
-        elementos.put("escarba_vasos",R.drawable.escarba_vasos);
+        elementos.put("escarbavasos",R.drawable.escarbavasos);
         elementos.put("fusta",R.drawable.fusta);
         elementos.put("matra",R.drawable.matra);
         elementos.put("montura",R.drawable.montura);
@@ -450,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
         HashSet<String> wordsSet= new HashSet<String>();
 
         wordsSet.add("aros");
-        wordsSet.add("arriador");
+        wordsSet.add("arreador");
         wordsSet.add("bajomontura");
         wordsSet.add("bozal");
         wordsSet.add("caballo");
@@ -462,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
         wordsSet.add("cola");
         wordsSet.add("crines");
         wordsSet.add("cuerda");
-        wordsSet.add("escarba_vasos");
+        wordsSet.add("escarbavasos");
         wordsSet.add("fusta");
         wordsSet.add("matra");
         wordsSet.add("montura");
