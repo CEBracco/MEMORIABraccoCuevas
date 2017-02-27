@@ -417,7 +417,7 @@ public class MainActivity extends AppCompatActivity {
         String levelPref=SP.getString("pref_level","Experto");
         Set<String> imagesPref = SP.getStringSet("images", getDefaultSelectedWords());
 
-        return  (gender != null && !actualGenderPref.equals(gender)) || (actualLevelPref != null && !levelPref.equals(actualLevelPref)) || !equalsArray(new ArrayList<String>(imagesPref));
+        return  (gender != null && !actualGenderPref.equals(gender)) || (actualLevelPref != null && !levelPref.equals(actualLevelPref)) || imagesChanged(imagesPref);
     }
 
     private Boolean equalsArray(ArrayList<String> selectedPref){
@@ -425,6 +425,18 @@ public class MainActivity extends AppCompatActivity {
             if(selectedPref.containsAll(selected)){
                 return true;
             }
+        }
+        return false;
+    }
+
+    private Boolean imagesChanged(Set<String> imagesPref){
+        if(!equalsArray(new ArrayList<String>(imagesPref))){
+            SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor mEdit1 = sc.edit();
+            mEdit1.putBoolean("Finaliza",false);
+            mEdit1.putInt("Contador",0);
+            mEdit1.commit();
+            return true;
         }
         return false;
     }
