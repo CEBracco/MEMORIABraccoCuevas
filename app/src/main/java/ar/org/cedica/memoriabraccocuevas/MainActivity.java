@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.DrawFilter;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +29,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import android.os.Handler;
+import android.widget.ProgressBar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> selected;
     ArrayList<String> imagenesDistractoras;
     Map<String,Integer> componenteAMemorizar;
-
+    ProgressBar pb;
 
     private Boolean timerStopped=true;
     private Handler timer=new Handler(){
@@ -91,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
         Set<String> set = sp.getStringSet("images", getDefaultSelectedWords());
 
         selected = new ArrayList<String>(set);
+        pb = (ProgressBar) this.findViewById(R.id.progressBar);
 
+        pb.setBackgroundColor(Color.WHITE);
         Collections.sort(selected);
         Integer a = selected.size();
 
@@ -205,7 +212,9 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor mEdit1 = sc.edit();
         if(contador==0){
             mEdit1.putBoolean("Finaliza",false);
+            pb.setProgress(0);
         }
+        pb.setMax(selected.size());
         if((contador+1)==selected.size()){
             mEdit1.putBoolean("Finaliza",true);
         }
@@ -235,9 +244,12 @@ public class MainActivity extends AppCompatActivity {
                 alert.setPositiveButton("Siguiente Nivel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
+
+
                         v.setBackgroundResource(0);
                         v.setPadding(0,0,0,0);
                         setNivel();
+                        resetContador();
                         recreate();
                     }
                 });
@@ -252,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
                         recreate();
                     }
                 });
+
+
                 alert.setIcon(android.R.drawable.ic_dialog_alert);
                 alert.show();
 
@@ -265,6 +279,10 @@ public class MainActivity extends AppCompatActivity {
                         recreate();
                     }
                 });
+                SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                Integer contador = sc.getInt("Contador",0);
+                pb.setProgress(contador);
+                Integer i =pb.getMax();
                 mp.start();
             }
         }
@@ -444,6 +462,7 @@ public class MainActivity extends AppCompatActivity {
         mEdit1.putBoolean("Finaliza",false);
         mEdit1.putInt("Contador",0);
         mEdit1.commit();
+        pb.setProgress(0);
     }
 
     private  void startTimer(){
