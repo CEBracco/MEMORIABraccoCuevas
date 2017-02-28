@@ -117,9 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //esto deberia usar la imagen seleccionada.
         final Integer idImgActual = componenteAMemorizar.get(word);
-        //final Integer idImgActual = this.nextElemen(arrHarcodeado,posActual);
 
 
         //es un arreglo dinamico, la longitud va a depender del nivel,
@@ -136,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         //depende del nivel
         Integer randPosition =(random.nextInt(cantImg));
 
-//        imgs[(randPosition)].setBackgroundResource(componenteAMemorizar.get(word));
-        //viejo
         imgs[(randPosition)].setImageResource(componenteAMemorizar.get(word));
         imgs[randPosition].setTag(componenteAMemorizar.get(word));
         int rand =((int)(Math.random()*(Max-Min))+Min);
@@ -151,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                 if (i != randPosition) {
                     if (assetsImg.get(rand) != null && !elementosEnPantalla.contains(assetsImg.get(rand))) {
                         elementosEnPantalla.add(assetsImg.get(rand));
-//                        imgs[i].setBackgroundResource(assetsImg.get(rand));
 
                         imgs[i].setImageResource(assetsImg.get(rand));
                         imgs[i].setTag(assetsImg.get(rand));
@@ -178,7 +173,8 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-
+        //reproduzco por primera vez el audio
+        mp.start();
 
     }
     private Integer nextPos(Integer sizeArray,Integer posAct){
@@ -231,8 +227,8 @@ public class MainActivity extends AppCompatActivity {
     private void alert(final View v, Boolean b){
         String title="¡Has Perdido!";
         if(b){
-            MediaPlayer.create(v.getContext(), R.raw.relincho).start();
             if(finalizoNivel()){
+                MediaPlayer.create(v.getContext(), R.raw.relincho).start();
                 final AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
                 title="¡GANASTE!";
                 alert.setTitle(title);
@@ -247,25 +243,30 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-                alert.setNegativeButton("Reintentar", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton("Repetir Nivel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing
                         v.setBackgroundResource(0);
                         v.setPadding(0,0,0,0);
-                        startTimer();
+                        resetContador();
+                        recreate();
                     }
                 });
                 alert.setIcon(android.R.drawable.ic_dialog_alert);
                 alert.show();
 
             }else{
-                recreate();
+                MediaPlayer mp=MediaPlayer.create(v.getContext(), R.raw.relincho);
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        v.setBackgroundResource(0);
+                        v.setPadding(0,0,0,0);
+                        recreate();
+                    }
+                });
+                mp.start();
             }
-
-
-            //hay que hacer un sleep por el sonido
-
-
         }
         else{
             MediaPlayer mp=MediaPlayer.create(v.getContext(), R.raw.resoplido);
@@ -431,14 +432,18 @@ public class MainActivity extends AppCompatActivity {
 
     private Boolean imagesChanged(Set<String> imagesPref){
         if(!equalsArray(new ArrayList<String>(imagesPref))){
-            SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor mEdit1 = sc.edit();
-            mEdit1.putBoolean("Finaliza",false);
-            mEdit1.putInt("Contador",0);
-            mEdit1.commit();
+            resetContador();
             return true;
         }
         return false;
+    }
+
+    private void resetContador(){
+        SharedPreferences sc = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor mEdit1 = sc.edit();
+        mEdit1.putBoolean("Finaliza",false);
+        mEdit1.putInt("Contador",0);
+        mEdit1.commit();
     }
 
     private  void startTimer(){
